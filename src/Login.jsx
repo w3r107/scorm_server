@@ -15,7 +15,7 @@ const Login = ({ token, setToken }) => {
     //   }
     // );
     // setToken(res?.data?.idToken);
-    navigate("/framing", { state: res?.data?.idToken });
+    navigate("/framing", { state: "asd" });
   };
 
   return (
