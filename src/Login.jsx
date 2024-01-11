@@ -7,13 +7,13 @@ const Login = ({ token, setToken }) => {
   const navigate = useNavigate();
   const handleLogin = async () => {
     console.log("clicked");
-    const res = await axios.post(
-      "https://sereindevapi.kdev.co.in/auth/signin",
-      {
-        email: name,
-        password: pass,
-      }
-    );
+    // const res = await axios.post(
+    //   "https://sereindevapi.kdev.co.in/auth/signin",
+    //   {
+    //     email: name,
+    //     password: pass,
+    //   }
+    // );
     // setToken(res?.data?.idToken);
     navigate("/framing", { state: res?.data?.idToken });
   };
