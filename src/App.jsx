@@ -57,8 +57,8 @@ function App() {
         </> */}
 
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        <Route path="/" element={<Framing />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/framing" element={<Framing />} />
         <Route path="/iframe" element={<Iframe />} />
       </Routes>
     </>
