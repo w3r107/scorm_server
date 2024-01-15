@@ -6,6 +6,7 @@ import Login from "./Login";
 import { Route, Router, Routes } from "react-router-dom";
 import Framing from "./Framing";
 import Iframe from "./iframe";
+import Start from "./Start";
 
 function App() {
   const [scormContent, setScormContent] = useState("");
@@ -57,9 +58,10 @@ function App() {
         </> */}
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Start />} />
+        {/* <Route path="/" element={<Login />} />
         <Route path="/framing" element={<Framing />} />
-        <Route path="/iframe" element={<Iframe />} />
+        <Route path="/iframe" element={<Iframe />} /> */}
       </Routes>
     </>
     // <iframe
