@@ -67,7 +67,7 @@ const Start = () => {
         if (isMounted.current) {
           // Only set a timeout if the component is still mounted
           reconnectTimeoutId = setTimeout(() => {
-            connectWebSocket();
+            // connectWebSocket();
           }, reconnectTimeout.current);
         }
       });
