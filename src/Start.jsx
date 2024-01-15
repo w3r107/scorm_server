@@ -6,9 +6,9 @@ const Start = () => {
   const socketRef = useRef(null);
   const isMounted = useRef(true);
   const reconnectTimeout = useRef(1000);
-  //   const WSURL = "wss://sereindevapi.kdev.co.in";
-
-  const WSURL = "ws://localhost:3000";
+  const WSURL = "ws://sereindevapi.kdev.co.in";
+  //
+  //   const WSURL = "ws://localhost:3000";
   const [tableCalls, setTableCalls] = useState(null);
 
   const connectWebSocket = () => {
