@@ -7,6 +7,8 @@ const Start = () => {
   const isMounted = useRef(true);
   const reconnectTimeout = useRef(1000);
   const WSURL = "ws://sereindevapi.kdev.co.in";
+
+  const count = useRef(0);
   //
   //   const WSURL = "ws://localhost:3000";
   const [tableCalls, setTableCalls] = useState(null);
@@ -18,6 +20,7 @@ const Start = () => {
       console.log("Instance Created");
 
       socketRef.current.addEventListener("open", () => {
+        count.current += 1;
         if (socketRef.current.readyState !== WebSocket.OPEN) return;
         console.log("Connection Opened");
         socketRef.current.send(
@@ -67,7 +70,7 @@ const Start = () => {
         if (isMounted.current) {
           // Only set a timeout if the component is still mounted
           reconnectTimeoutId = setTimeout(() => {
-            // connectWebSocket();
+            if (count.current < 10) connectWebSocket();
           }, reconnectTimeout.current);
         }
       });
