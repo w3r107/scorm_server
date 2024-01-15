@@ -6,58 +6,74 @@ const Start = () => {
   const socketRef = useRef(null);
   const isMounted = useRef(true);
   const reconnectTimeout = useRef(1000);
-  const WSURL = "wss://sereindevapi.kdev.co.in";
-  //   const WSURL = "ws://localhost:3000";
+  //   const WSURL = "wss://sereindevapi.kdev.co.in";
+
+  const WSURL = "ws://localhost:3000";
   const [tableCalls, setTableCalls] = useState(null);
 
   const connectWebSocket = () => {
-    socketRef.current = new WebSocket(`${WSURL}/handle`);
-    // socketRef.current = new WebSocket(`${WSURL}/v1/ws/serviceCalls`);
-    console.log("Instance Created");
+    try {
+      //   socketRef.current = new WebSocket(`${WSURL}/handle`);
+      socketRef.current = new WebSocket(`${WSURL}/v1/ws/serviceCalls`);
+      console.log("Instance Created");
 
-    socketRef.current.addEventListener("open", () => {
-      if (socketRef.current.readyState !== WebSocket.OPEN) return;
-      console.log("Connection Opened");
-      socketRef.current.send(
-        JSON.stringify({
-          type: "connect",
-          clientId: localStorage.getItem("restaurantId"),
-        })
-      );
-    });
+      socketRef.current.addEventListener("open", () => {
+        if (socketRef.current.readyState !== WebSocket.OPEN) return;
+        console.log("Connection Opened");
+        socketRef.current.send(
+          JSON.stringify({
+            type: "connect",
+            clientId: localStorage.getItem("restaurantId"),
+          })
+        );
+      });
 
-    socketRef.current.addEventListener("message", (message) => {
-      if (socketRef.current.readyState !== WebSocket.OPEN) return;
-      const { type, isCheck, tableNumber } = JSON.parse(message?.data);
-      if (type === "newTableCall" && tableNumber) {
-        const newCall = {
-          tableNumber,
-          isCheck,
-          startTime: Date.now(),
-          timeoutId: null,
-        };
+      socketRef.current.addEventListener("message", (message) => {
+        if (socketRef.current.readyState !== WebSocket.OPEN) return;
+        const { type, isCheck, tableNumber } = JSON.parse(message?.data);
+        if (type === "newTableCall" && tableNumber) {
+          const newCall = {
+            tableNumber,
+            isCheck,
+            startTime: Date.now(),
+            timeoutId: null,
+          };
 
-        newCall.timeoutId = setTimeout(() => {
-          setTableCalls((prevCalls) =>
-            prevCalls.filter((call) => call.tableNumber !== tableNumber)
-          );
-        }, 180000); // 3 minutes
+          newCall.timeoutId = setTimeout(() => {
+            setTableCalls((prevCalls) =>
+              prevCalls.filter((call) => call.tableNumber !== tableNumber)
+            );
+          }, 180000); // 3 minutes
 
-        setTableCalls((prevCalls) => [...prevCalls, newCall]);
-        // playAlert();
-      }
-    });
+          setTableCalls((prevCalls) => [...prevCalls, newCall]);
+          // playAlert();
+        }
+      });
 
-    let reconnectTimeoutId;
-    socketRef.current.addEventListener("close", () => {
-      console.log("WebSocket connection closed");
-      if (isMounted.current) {
-        // Only set a timeout if the component is still mounted
-        reconnectTimeoutId = setTimeout(() => {
-          connectWebSocket();
-        }, reconnectTimeout.current);
-      }
-    });
+      socketRef.current.addEventListener("error", (e) => {
+        console.log("WebSocket connection error", e);
+
+        // if (isMounted.current) {
+        //   // Only set a timeout if the component is still mounted
+        //   reconnectTimeoutId = setTimeout(() => {
+        //     connectWebSocket();
+        //   }, reconnectTimeout.current);
+        // }
+      });
+
+      let reconnectTimeoutId;
+      socketRef.current.addEventListener("close", () => {
+        console.log("WebSocket connection closed");
+        if (isMounted.current) {
+          // Only set a timeout if the component is still mounted
+          reconnectTimeoutId = setTimeout(() => {
+            connectWebSocket();
+          }, reconnectTimeout.current);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
