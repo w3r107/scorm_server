@@ -6,7 +6,7 @@ const Start = () => {
   const socketRef = useRef(null);
   const isMounted = useRef(true);
   const reconnectTimeout = useRef(1000);
-  const WSURL = "ws://sereindevapi.kdev.co.in";
+  const WSURL = "wss://sereindevapi.kdev.co.in";
 
   const count = useRef(0);
   //
