@@ -15,8 +15,8 @@ const Start = () => {
 
   const connectWebSocket = () => {
     try {
-      //   socketRef.current = new WebSocket(`${WSURL}/handle`);
-      socketRef.current = new WebSocket(`${WSURL}/v1/ws/orders`);
+      socketRef.current = new WebSocket(`${WSURL}/handle`);
+      //   socketRef.current = new WebSocket(`${WSURL}/v1/ws/orders`);
       //   socketRef.current = new WebSocket(`${WSURL}/v1/ws/serviceCalls`);
       console.log("Instance Created");
 
