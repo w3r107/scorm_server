@@ -7,7 +7,7 @@ const Start = () => {
   const isMounted = useRef(true);
   const reconnectTimeout = useRef(1000);
   //   const WSURL = "wss://139.59.65.117:8080";
-  const WSURL = "ws://sereindevapi.kdev.co.in";
+  const WSURL = "wss://sereindevapi.kdev.co.in";
 
   //
   //   const WSURL = "ws://localhost:3000";
