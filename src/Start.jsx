@@ -11,7 +11,8 @@ const Start = () => {
   const isMounted = useRef(true);
   const audioRef = useRef(null);
   const clearCallsInterval = useRef(null);
-  const WSURL = "wss://testdevapi.kdev.co.in";
+  // const WSURL = "wss://testdevapi.kdev.co.in";
+  const WSURL = "wss://menuapi.hopa.tech";
   useEffect(() => {
     clearCallsInterval.current = setInterval(() => {
       setTableCalls([]);
@@ -48,7 +49,8 @@ const Start = () => {
   };
 
   const connectWebSocket = () => {
-    socketRef.current = new WebSocket(`${WSURL}/v1/ws/serviceCalls`);
+    // socketRef.current = new WebSocket(`${WSURL}/v1/ws/serviceCalls`);
+    socketRef.current = new WebSocket(`${WSURL}/v1/ws/orders`);
     console.log("Instance Created");
 
     socketRef.current.addEventListener("open", () => {
